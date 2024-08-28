@@ -1,8 +1,17 @@
-@startuml Investment Calculator
+@startuml Investment Calculator Service Diagram
 
 class InvestmentService {
   +annualInvestmentResults: signal<InvestmentResult[] | undefined>
   +onCalculateInvestmentResults(investmentInput: InvestmentInput): void
+}
+
+class AppModule {
+}
+
+class UserInputModule {
+}
+
+class InvestmentResultsModule {
 }
 
 class AppComponent {
@@ -71,6 +80,19 @@ class "header.component.html" as HeaderComponentTemplate {
 
 InvestmentService --> InvestmentInput : uses
 InvestmentService --> InvestmentResult : uses
+
+AppModule --> AppComponent : declares
+AppModule --> HeaderComponent : declares
+AppModule --> BrowserModule : imports
+AppModule --> InvestmentResultsModule : imports
+AppModule --> UserInputModule : imports
+
+UserInputModule --> UserInputComponent : declares
+UserInputModule --> FormsModule : imports
+
+InvestmentResultsModule --> InvestmentResultsComponent : declares
+InvestmentResultsModule --> CurrencyPipe : imports
+
 AppComponent --> AppComponentTemplate : uses template
 UserInputComponent --> UserInputComponentTemplate : uses template
 InvestmentResultsComponent --> InvestmentResultsComponentTemplate : uses template
